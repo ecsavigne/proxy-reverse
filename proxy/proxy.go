@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"net/http/httputil"
 	"net/url"
+
+	"github.com/gin-gonic/gin"
+	"github.com/pkg/errors"
 )
 
 type ProxyReverse struct {
