@@ -10,9 +10,9 @@ import (
 )
 
 type ProxyReverse struct {
-	Host         string `json:"host"`
+	Host         string `json:"host"` // Host of petition if not specified will be localhost
 	Port         string `json:"port"`
-	Protocol     string `json:"protocol"`
+	Protocol     string `json:"protocol"` // Protocol of petition if not specified will be http
 	reverseProxy *httputil.ReverseProxy
 	error_       error
 }
