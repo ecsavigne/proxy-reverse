@@ -20,9 +20,19 @@ type ProxyReverse struct {
 // Create a new ProxyReverse parameter is a struct of type ProxyReverse with configured values for host, port and protocol
 var NewProxyReverse = func(c ProxyReverse) *ProxyReverse {
 	var host string = c.Host
+
+	if c.Host == "" {
+		host = "localhost"
+	}
+
 	if c.Port != "" {
 		host = fmt.Sprintf("%s:%s", c.Host, c.Port)
 	}
+
+	if c.Protocol == "" {
+		c.Protocol = "http"
+	}
+
 	targetHost := fmt.Sprintf("%s://%s", c.Protocol, host)
 
 	p := &ProxyReverse{
