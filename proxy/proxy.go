@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
+	"golang.org/x/net/http2"
 )
 
 type ProxyReverse struct {
@@ -47,6 +48,7 @@ var NewProxyReverse = func(c ProxyReverse) *ProxyReverse {
 		return p
 	}
 	p.reverseProxy = httputil.NewSingleHostReverseProxy(target)
+	p.reverseProxy.Transport = &http2.Transport{}
 	return p
 }
 
