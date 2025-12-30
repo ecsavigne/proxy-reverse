@@ -1,7 +1,10 @@
 package proxy
 
 import (
+	"context"
+	"crypto/tls"
 	"fmt"
+	"net"
 	"net/http/httputil"
 	"net/url"
 
@@ -48,7 +51,15 @@ var NewProxyReverse = func(c ProxyReverse) *ProxyReverse {
 		return p
 	}
 	p.reverseProxy = httputil.NewSingleHostReverseProxy(target)
-	p.reverseProxy.Transport = &http2.Transport{}
+
+	t2 := &http2.Transport{
+		AllowHTTP: true,
+		DialTLSContext: func(ctx context.Context, network, addr string, cfg *tls.Config) (net.Conn, error) {
+			return net.Dial(network, addr)
+		},
+	}
+	p.reverseProxy.Transport = t2
+
 	return p
 }
 
